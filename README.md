@@ -1,7 +1,7 @@
 # ToDo Application: Spring Boot, React, and MySQL with Docker Compose
 
 ## 1. Clone the Repository
-   git clone https://github.com/buddhi530/todo-app.git  
+   ```git clone https://github.com/buddhi530/todo-app.git  ```
    navigate to project directory : ```cd todo-app```
 
 ## 2. Build and Run the Project
