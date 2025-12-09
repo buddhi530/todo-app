@@ -56,6 +56,6 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/coveragex?useSSL=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: coveragex_user
       SPRING_DATASOURCE_PASSWORD: coveragex_pass
-
+    command: mvn test
 volumes:
   mysql_data:
