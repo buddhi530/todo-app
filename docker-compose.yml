@@ -1,0 +1,61 @@
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: coveragex
+      MYSQL_USER: coveragex_user
+      MYSQL_PASSWORD: coveragex_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "coveragex_user", "-pcoveragex_pass" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+
+  backend:
+    build: ./coveragex-todo-backend
+    container_name: coveragex-backend
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/coveragex?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: coveragex_user
+      SPRING_DATASOURCE_PASSWORD: coveragex_pass
+    depends_on:
+       mysql:
+         condition: service_healthy
+
+  frontend:
+    build: ./todo-frontend
+    container_name: coveragex-frontend
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  tester:
+    image: maven:3.9.6-eclipse-temurin-17
+    container_name: coveragex-tester
+    working_dir: /app
+    volumes:
+      - ./coveragex-todo-backend:/app
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/coveragex?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: coveragex_user
+      SPRING_DATASOURCE_PASSWORD: coveragex_pass
+
+volumes:
+  mysql_data:
