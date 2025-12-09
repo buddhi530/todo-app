@@ -23,7 +23,7 @@
 ## 5. To verify the test execution and results:
    ```docker ps -a```
 
-## 6. View the test logs (results):
+## 6. View the Unit tests and integration tests for the backend test logs (results):
    ```docker logs coveragex-tester```
 
 ## 7. Stop and Clean Up
