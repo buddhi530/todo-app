@@ -1,5 +1,11 @@
 # ToDo Application: Spring Boot, React, and MySQL with Docker Compose
 
+## check Check the Docker Status in linux environment  
+   ```sudo systemctl status docker```  
+   Expected Output: You should see a status indicating ```active (running)```.  
+   If the status shows it is inactive or stopped, you can start the service using the following command:  
+   ```sudo systemctl start docker```
+
 ## 1. Clone the Repository
    ```git clone https://github.com/buddhi530/todo-app.git  ```  
    navigate to project directory : ```cd todo-app```
